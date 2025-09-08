@@ -7,25 +7,39 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class Lab02_LynaSelami extends Application {
+
+    // Spec constants
+    private static final String TITLE_TOP = "Random Game";
+    private static final String TITLE_BOTTOM = "Waiting…";
+    private static final int RANDOM_MIN = 101;
+    private static final int RANDOM_MAX = 120;
+    private static final String IMAGES_DIR = "file:images/"; // folder at project root
 
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
 
-        Label lblTop = new Label("Random Game");
-        Label lblBottom = new Label("Waiting…");
+        Label lblTop = new Label(TITLE_TOP);
+        Label lblBottom = new Label(TITLE_BOTTOM);
         BorderPane.setMargin(lblTop, new Insets(5));
         BorderPane.setMargin(lblBottom, new Insets(5));
         root.setTop(lblTop);
         root.setBottom(lblBottom);
 
-        Label lblImage = new Label("Image will appear here"); // placeholder text for now
+        Label lblImage = new Label("Loading image…");
         VBox middle = new VBox(lblImage);
         middle.setAlignment(Pos.CENTER);
         middle.setPadding(new Insets(10));
         root.setCenter(middle);
+
+        // Decide which image to use; just log it for now
+        int number = randomBetween(RANDOM_MIN, RANDOM_MAX);
+        String path = IMAGES_DIR + number + ".png";
+        System.out.println("Selected image path = " + path);
 
         Scene scene = new Scene(root, 250, 300);
         stage.setTitle("Java Games");
@@ -33,8 +47,11 @@ public class Lab02_LynaSelami extends Application {
         stage.show();
     }
 
+    private static int randomBetween(int minInclusive, int maxInclusive) {
+        return new Random().nextInt(maxInclusive - minInclusive + 1) + minInclusive;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
 }
-
